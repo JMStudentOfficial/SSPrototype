@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerCollision : MonoBehaviour
+{
+    [Header("Game Objects")]
+    public GameObject screenShape;
+
+    [Space]
+
+    [Header("Floats")]
+    private float collidedShape;
+
+    //0 = Cube, 1 = Sphere, 2 = Cylinder
+
+    [Space]
+
+    [Header("Bools")]
+    private bool isPlayerHit;
+
+    [Space]
+
+    [Header("Scripts")]
+    public Manager manager;
+    private ScreenShape ssScript;
+
+    private void Start()
+    {
+        isPlayerHit = false;
+        manager.GetComponent<Manager>();
+        ssScript = screenShape.GetComponent<ScreenShape>();
+    }
+
+    private void Update()
+    {
+        if(isPlayerHit)
+        {
+            if(PlayerStats.playerType == collidedShape && PlayerStats.playerType == ssScript.screenType)
+            {
+                CollectProjectile();
+            }
+            else
+            {
+                LevelFailed();
+            }
+
+            isPlayerHit = false;
+        }
+    }
+
+    void CollectProjectile()
+    {
+        PlayerStats.score += 100f;
+        ssScript.nextShape = true;
+        print("Collected, " + PlayerStats.score);
+    }
+
+    void LevelFailed()
+    {
+        manager.isLevelFail = true;
+        print("Level Failed");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "projectile")
+        {
+            isPlayerHit = true;
+            collidedShape = other.gameObject.GetComponent<Projectiles>().type;
+            Destroy(other.gameObject);
+        }
+    }
+}
