@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ScreenShapeMovement : MonoBehaviour
+{
+    [Header("Game Objects")]
+    public GameObject pivot;
+
+    [Space]
+
+    [Header("Transforms")]
+    private Transform T;
+
+    [Space]
+
+    [Header("Floats")]
+    public float speed;
+
+
+    private void Start()
+    {
+        T = pivot.GetComponent<Transform>();
+    }
+
+    void FixedUpdate()
+    {
+        this.transform.position = Vector3.Lerp(this.transform.position, T.position, speed * Time.deltaTime);
+    }
+}
