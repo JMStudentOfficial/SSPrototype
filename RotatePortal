@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RotatePortal : MonoBehaviour
+{
+    [Header("Transforms")]
+    private Transform T;
+
+    [Space]
+
+    [Header("Vector3s")]
+    private Vector3 rotate;
+    public Vector3 spinFactor;
+
+    [Space]
+
+    [Header("Floats")]
+    public float speed;
+
+
+    private void Start()
+    {
+        rotate = new Vector3(rotate.x % 360f, rotate.y % 360f, rotate.z % 360f);
+        T = this.gameObject.GetComponent<Transform>();
+        rotate = spinFactor;
+    }
+
+    void FixedUpdate()
+    {
+        this.transform.Rotate(rotate * speed * Time.deltaTime, Space.Self);
+    }
+}
