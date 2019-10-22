@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RotatePlayer : MonoBehaviour
+{
+    //[Header("Transforms")]
+    //private Transform playerTransform;
+
+    //[Space]
+
+    [Header("Vector3s")]
+    private Vector3 playerPos;
+    private Vector3 nextPos;
+
+    [Space]
+
+    [Header("Floats")]
+    public float speed;
+    public float loop;
+    float timer;
+    float xSpin;
+    float ySpin;
+    float zSpin;
+
+    private void Start()
+    {
+        //playerTransform = this.gameObject.GetComponent<Transform>();
+        playerPos = new Vector3(playerPos.x % 360f, playerPos.y % 360f, playerPos.z % 360f);
+        this.transform.eulerAngles = playerPos;
+        nextPos = Random.insideUnitSphere;
+        nextPos *= 180f;
+        timer = 0;
+        //RotateRandomly();
+    }
+
+    private void FixedUpdate()
+    {
+        //playerPos = playerPos + nextPos * Time.deltaTime;
+        //playerPos = new Vector3(playerPos.x % 360f, playerPos.y % 360f, playerPos.z % 360f);
+        //this.transform.eulerAngles = playerPos;
+        //if(playerPos == nextPos)
+        //    changeRotation = true;
+
+        //if(changeRotation == true)
+        //{
+        //    nextPos = Random.insideUnitSphere;
+        //    nextPos *= 180f;
+        //    changeRotation = false;
+        //    print("Changed rotation");
+        //}
+
+        //playerPos = Vector3.Lerp(playerPos, nextPos, speed* Time.deltaTime);
+        //this.transform.eulerAngles = playerPos;
+
+        //this.transform.rotation = Quaternion.Euler(nextPos * speed * Time.deltaTime);
+        //print(playerPos);
+        //print(nextPos);
+        if (timer > loop)
+        {
+            //RotateRandomly();
+            nextPos = Random.insideUnitSphere;
+            nextPos *= 180f;
+            timer = 0;
+        }
+            this.transform.Rotate(nextPos * speed * Time.deltaTime, Space.Self);
+
+        timer += Time.deltaTime;
+    }
+
+    void RotateRandomly()
+    {
+        float xSpin = Random.Range(0, 360);
+        float ySpin = Random.Range(0, 360);
+        float zSpin = Random.Range(0, 360);
+        print("rotated");
+    }
+}
