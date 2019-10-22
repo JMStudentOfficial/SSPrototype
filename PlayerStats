@@ -1,0 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class PlayerStats
+{
+    [Header("Floats")]
+    public static float score;
+    public static float playerType;
+    public static float playerColour; // 0 = Cube, 1 = Sphere, 3 = Cylinder
+}
