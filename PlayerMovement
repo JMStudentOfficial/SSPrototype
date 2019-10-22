@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    [Header("Game Objects")]
+    public GameObject player;
+
+    [Space]
+
+    [Header("Arrays")]
+    public Transform pivotPoint;
+
+    [Space]
+
+    [Header("floats")]
+    public float speed;
+
+    void Start()
+    {
+        //player.transform.position = waypoints[0].transform.position;
+    }
+
+
+    void FixedUpdate()
+    {
+        if (Input.GetButton("a"))
+            OrbitLeft();
+        else if (Input.GetButton("d"))
+            OrbitRight();
+    }
+
+    void OrbitLeft()
+    {
+        transform.RotateAround(pivotPoint.transform.position, Vector3.left, speed * Time.deltaTime);
+    }
+
+    void OrbitRight()
+    {
+        transform.RotateAround(pivotPoint.transform.position, Vector3.right, speed * Time.deltaTime);
+    }
+}
