@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Projectiles : MonoBehaviour
+{
+    [Header("Floats")]
+    public float speed;
+    public float multiplier;
+    public float type;
+
+    [Space]
+
+    [Header("Vector3s")]
+    private Vector3 direction;
+
+    [Space]
+
+    [Header("Bools")]
+    public bool isPlayerHit;
+
+
+    void Start()
+    {
+        direction = new Vector3(multiplier, 0, 0);
+        speed = Random.Range(1, 5);
+    }
+
+    void Update()
+    {
+        this.transform.Translate(direction * speed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "wall")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    //public void DestroyProjectile()
+    //{
+    //    Destroy(this.gameObject);
+    //    print("Destroyed");
+    //}
+}
