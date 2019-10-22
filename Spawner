@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Spawner : MonoBehaviour
+{
+    [Header("Game Objects")]
+    public GameObject[] shape;
+
+    [Space]
+
+    [Header("Transforms")]
+    private Transform T;
+
+    [Space]
+
+    [Header("Ints")]
+    private int rand;
+    public int from;
+    public int to;
+
+    [Space]
+
+    [Header("Bools")]
+    private bool isFiring;
+
+
+    void Start()
+    {
+        T = this.gameObject.transform;
+        isFiring = true;
+    }
+    
+
+    void Update()
+    {
+        if(isFiring == true)
+        {
+            FireShape();
+            StartCoroutine(Delay());
+        }
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(Random.Range(from, to));
+        isFiring = true;
+    }
+
+    void FireShape()
+    {
+        //print("Shape Fired");
+        rand = Random.Range(0, 3);
+        GameObject p = Instantiate(shape[rand]);
+        //print(rand);
+        p.transform.position = T.position;
+        p.transform.rotation = T.rotation;
+        Projectiles pScript = p.GetComponent<Projectiles>();
+        pScript.type = rand;
+        isFiring = false;
+    }
+}
